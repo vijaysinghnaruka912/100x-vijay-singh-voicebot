@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vijay Singh | AI Voice Bot</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div class="badge">100x Stage 1 Assessment</div>
+      <h1>Vijay Singh</h1>
+      <h2>AI Engineer Voice Bot</h2>
+      <p>Ask interview-style questions by voice or text. The bot responds as Vijay Singh, focused on learning, AI tools, data analysis, engineering, and practical problem solving.</p>
+    </section>
 
+    <section class="card">
+      <div class="bot-status"><span id="statusDot" class="dot"></span><span id="statusText">Ready</span></div>
+      <label for="questionInput">Ask a question</label>
+      <textarea id="questionInput" rows="4" placeholder="Example: What should we know about your life story in a few sentences?"></textarea>
+
+      <div class="button-row">
+        <button id="micButton" class="secondary">🎙️ Speak Question</button>
+        <button id="askButton">Ask Bot</button>
+        <button id="stopButton" class="ghost">Stop Voice</button>
+      </div>
+
+      <div class="examples">
+        <p>Quick test questions:</p>
+        <button class="example">What should we know about your life story in a few sentences?</button>
+        <button class="example">What’s your #1 superpower?</button>
+        <button class="example">What are the top 3 areas you’d like to grow in?</button>
+        <button class="example">What misconception do your coworkers have about you?</button>
+        <button class="example">How do you push your boundaries and limits?</button>
+        <button class="example">Why are you interested in AI agents?</button>
+        <button class="example">Why should 100x hire you?</button>
+        <button class="example">Tell me about your internship experience.</button>
+        <button class="example">How do you explain your CGPA?</button>
+      </div>
+    </section>
+
+    <section class="card response-card">
+      <h3>Bot Response</h3>
+      <div id="responseBox" class="response">Hi, I’m Vijay Singh’s AI voice bot. Ask me an interview question to begin.</div>
+      <p id="modeText" class="mode-text"></p>
+    </section>
+
+    <footer>Voice input + AI response + spoken output. Built as a simple, non-technical demo.</footer>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
