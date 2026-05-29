@@ -4,7 +4,223 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vijay Singh | AI Voice Bot</title>
-  <link rel="stylesheet" href="/style.css" />
+  <style>
+    :root {
+      --bg: #08111f;
+      --bg2: #0f172a;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --primary: #7c3aed;
+      --primary2: #2563eb;
+      --secondary: #06b6d4;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 5%, rgba(124, 58, 237, 0.36), transparent 32%),
+        radial-gradient(circle at 82% 12%, rgba(6, 182, 212, 0.24), transparent 35%),
+        radial-gradient(circle at 50% 100%, rgba(37, 99, 235, 0.22), transparent 40%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+    }
+
+    .app-shell {
+      width: min(980px, 92vw);
+      margin: 0 auto;
+      padding: 42px 0 28px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: 0.98;
+      letter-spacing: -0.07em;
+    }
+
+    h2 {
+      margin: 8px 0 0;
+      font-size: clamp(24px, 4vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: #bae6fd;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      padding: 24px;
+      margin: 20px 0;
+    }
+
+    .bot-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 16px #22c55e;
+    }
+
+    .dot.working {
+      background: #f59e0b;
+      box-shadow: 0 0 16px #f59e0b;
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 650;
+    }
+
+    textarea {
+      width: 100%;
+      resize: vertical;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.80);
+      color: var(--text);
+      padding: 16px;
+      font: inherit;
+      outline: none;
+      min-height: 115px;
+    }
+
+    textarea:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.16);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      color: white;
+      font-weight: 750;
+      font-size: 15px;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+      transform: none;
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #06b6d4, #2563eb);
+    }
+
+    button.ghost {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid var(--card-border);
+    }
+
+    .examples {
+      margin-top: 22px;
+    }
+
+    .examples p {
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    .examples button {
+      display: inline-block;
+      margin: 5px;
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid var(--card-border);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .response-card h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+
+    .response {
+      min-height: 150px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(15, 23, 42, 0.76);
+      color: #e2e8f0;
+      font-size: 18px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .mode-text {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    footer {
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+      margin-top: 26px;
+    }
+  </style>
 </head>
 <body>
   <main class="app-shell">
@@ -12,13 +228,20 @@
       <div class="badge">100x Stage 1 Assessment</div>
       <h1>Vijay Singh</h1>
       <h2>AI Engineer Voice Bot</h2>
-      <p>Ask interview-style questions by voice or text. The bot responds as Vijay Singh, focused on learning, AI tools, data analysis, engineering, and practical problem solving.</p>
+      <p>
+        Ask interview-style questions by voice or text. The bot responds as Vijay Singh,
+        focused on learning, AI tools, data analysis, engineering, and practical problem solving.
+      </p>
     </section>
 
     <section class="card">
-      <div class="bot-status"><span id="statusDot" class="dot"></span><span id="statusText">Ready</span></div>
+      <div class="bot-status">
+        <span id="statusDot" class="dot"></span>
+        <span id="statusText">Ready</span>
+      </div>
+
       <label for="questionInput">Ask a question</label>
-      <textarea id="questionInput" rows="4" placeholder="Example: What should we know about your life story in a few sentences?"></textarea>
+      <textarea id="questionInput" rows="4" placeholder="Type your question here, then click Ask Bot. You can also press Enter to ask."></textarea>
 
       <div class="button-row">
         <button id="micButton" class="secondary">🎙️ Speak Question</button>
@@ -42,12 +265,240 @@
 
     <section class="card response-card">
       <h3>Bot Response</h3>
-      <div id="responseBox" class="response">Hi, I’m Vijay Singh’s AI voice bot. Ask me an interview question to begin.</div>
+      <div id="responseBox" class="response">
+        Hi, I’m Vijay Singh’s AI voice bot. Ask me an interview question to begin.
+      </div>
       <p id="modeText" class="mode-text"></p>
     </section>
 
-    <footer>Voice input + AI response + spoken output. Built as a simple, non-technical demo.</footer>
+    <footer>
+      Voice input + AI response + spoken output. Built as a simple, non-technical demo.
+    </footer>
   </main>
-  <script src="/app.js"></script>
+
+  <script>
+    const questionInput = document.getElementById("questionInput");
+    const askButton = document.getElementById("askButton");
+    const micButton = document.getElementById("micButton");
+    const stopButton = document.getElementById("stopButton");
+    const responseBox = document.getElementById("responseBox");
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+    const modeText = document.getElementById("modeText");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+
+    const fallbackAnswers = [
+      {
+        keys: ["life", "story", "background", "journey", "about yourself", "few sentences", "introduce"],
+        answer: "I am from Jaipur, Rajasthan, and I recently completed my B.Tech in Electrical Engineering from IIT (ISM) Dhanbad. My journey has been about exploring different areas, learning what truly interests me, and gradually moving toward technical problem-solving, data analysis, and AI tools. In the beginning, I focused more on core engineering, but later I realized that I enjoy working with tools, analyzing problems, and using technology to make work easier and more effective. I am now actively looking for a technical role where I can learn deeply, contribute sincerely, and grow with real-world experience."
+      },
+      {
+        keys: ["superpower", "strength", "best skill", "number one", "#1", "strongest"],
+        answer: "My number one superpower is problem solving with patience. When I face pressure or a difficult task, I try not to panic. I first observe the problem clearly, understand what inputs are available, break the work into smaller steps, and then start executing. I also believe in not giving up easily, even when something does not work in the first attempt."
+      },
+      {
+        keys: ["grow", "growth", "improve", "top 3", "three areas", "weakness", "areas"],
+        answer: "The top three areas I want to grow in are communication, team collaboration, and debugging and testing. I want to become better at explaining my ideas clearly, working more effectively with different types of people, and improving the quality of my technical work through better testing and debugging. As a fresher, I know I have a lot to learn, and I am ready to put in consistent effort to improve."
+      },
+      {
+        keys: ["misconception", "coworkers", "colleagues", "wrong about you", "misunderstand", "quiet"],
+        answer: "A misconception people may have about me is that I am quiet. In reality, I observe things deeply before speaking or contributing. I like to first understand the problem, the team’s direction, and the expectations clearly. Once I have clarity, I contribute sincerely and try to add value in a thoughtful way."
+      },
+      {
+        keys: ["boundaries", "limits", "comfort zone", "push yourself", "challenge yourself", "pressure", "deadline"],
+        answer: "I push my boundaries by taking responsibility for tasks even when they are slightly outside my comfort zone. Under pressure, I stay calm, observe the problem, check the deadline, and plan my work according to priority. If I get stuck, I pause, reset my thinking, and restart with a clearer approach instead of giving up. I believe this mindset helps me keep learning and improving."
+      },
+      {
+        keys: ["why ai", "ai tool", "ai tools", "ai agent", "agents", "chatgpt"],
+        answer: "I am interested in AI tools and AI agents because they can make work faster, easier, and more structured. I like the idea of using AI not just for answers, but for improving workflows, reducing repetitive effort, and getting better output from limited time. I want to learn more about how AI agents work because I believe they can become very useful in real technical and business environments."
+      },
+      {
+        keys: ["100x", "why this company", "why join", "why do you want", "company"],
+        answer: "I want to join 100x because it gives me an opportunity to work more closely with AI tools and learn how modern AI-based systems are built. As a fresher, I am looking for a place where I can learn fast, take responsibility, and improve my skills through real work. I believe 100x can be a strong opportunity for me to prove my dedication, improve technically, and contribute with sincerity."
+      },
+      {
+        keys: ["hire", "hire you", "why should", "choose you", "select you"],
+        answer: "You should consider me because I am hardworking, patient, and genuinely willing to learn. I may be a fresher, but I take tasks seriously and try to complete them in a proper and responsible way. I am comfortable starting from basics, improving step by step, and learning from people around me. If I am given an opportunity, I will work with dedication, stay consistent, and keep improving my skills."
+      },
+      {
+        keys: ["cgpa", "grade", "marks", "academic", "performance"],
+        answer: "My CGPA does not fully define my interest, patience, or ability to work hard. During engineering, I explored different areas and was also involved in activities like sports, including being captain of the swimming team. Over time, I understood my interest better and became more focused on technical tools, data analysis, and AI-based work. I see this as part of my learning journey, and I am now much clearer about the direction I want to grow in."
+      },
+      {
+        keys: ["internship", "amrit", "meditech", "project", "experience"],
+        answer: "During my internship at AMRIT MediTech, I got exposure to a product-focused technical environment. It helped me understand that technical work is not only about theory, but also about usability, problem-solving, and improving a real product. That experience made me more interested in technical tools, data analysis, and practical software-based workflows."
+      }
+    ];
+
+    function fallbackResponse(message = "") {
+      const q = message.toLowerCase();
+      let best = { score: 0, answer: null };
+
+      for (const item of fallbackAnswers) {
+        const score = item.keys.reduce((count, key) => count + (q.includes(key.toLowerCase()) ? 1 : 0), 0);
+        if (score > best.score) best = { score, answer: item.answer };
+      }
+
+      if (best.answer) return best.answer;
+
+      return "That is a good question. My answer would be that I try to stay calm, understand the problem clearly, and then solve it step by step. As a fresher, I know I have a lot to learn, but I am hardworking, patient, and ready to take responsibility. I want to grow through real work and contribute sincerely wherever I get the opportunity.";
+    }
+
+    function setStatus(text, working = false) {
+      statusText.textContent = text;
+      statusDot.classList.toggle("working", working);
+    }
+
+    function speak(text) {
+      if (!("speechSynthesis" in window)) return;
+
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoice =
+        voices.find(v => /en-IN/i.test(v.lang)) ||
+        voices.find(v => /en-US/i.test(v.lang)) ||
+        voices.find(v => /en-GB/i.test(v.lang));
+
+      if (preferredVoice) utterance.voice = preferredVoice;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    async function askBot() {
+      const message = questionInput.value.trim();
+
+      if (!message) {
+        responseBox.textContent = "Please type a question or click one of the quick test questions.";
+        modeText.textContent = "";
+        return;
+      }
+
+      try {
+        setStatus("Thinking...", true);
+        askButton.disabled = true;
+        micButton.disabled = true;
+        modeText.textContent = "";
+
+        let answer = "";
+        let mode = "prepared";
+
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 8000);
+
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message }),
+            signal: controller.signal
+          });
+
+          clearTimeout(timeout);
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data.answer) {
+              answer = data.answer;
+              mode = data.mode || "openai";
+            }
+          }
+        } catch (apiError) {
+          console.log("API unavailable, using prepared response.");
+        }
+
+        if (!answer) {
+          answer = fallbackResponse(message);
+        }
+
+        responseBox.textContent = answer;
+
+        if (mode === "openai") {
+          modeText.textContent = "Live AI mode active.";
+        } else {
+          modeText.textContent = "Bot response active.";
+        }
+
+        speak(answer);
+        setStatus("Ready", false);
+
+      } catch (err) {
+        console.error(err);
+        responseBox.textContent = fallbackResponse(message);
+        modeText.textContent = "Bot response active.";
+        setStatus("Ready", false);
+      } finally {
+        askButton.disabled = false;
+        micButton.disabled = false;
+      }
+    }
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = "en-IN";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        setStatus("Listening...", true);
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        questionInput.value = transcript;
+        askBot();
+      };
+
+      recognition.onerror = () => {
+        setStatus("Mic error. Please type your question.", false);
+      };
+
+      recognition.onend = () => {
+        if (statusText.textContent === "Listening...") {
+          setStatus("Ready", false);
+        }
+      };
+    } else {
+      micButton.disabled = true;
+      micButton.textContent = "Mic not supported here";
+    }
+
+    askButton.addEventListener("click", askBot);
+
+    micButton.addEventListener("click", () => {
+      if (recognition) recognition.start();
+    });
+
+    stopButton.addEventListener("click", () => {
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      if (recognition) recognition.stop();
+      setStatus("Ready", false);
+    });
+
+    questionInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        askBot();
+      }
+    });
+
+    document.querySelectorAll(".example").forEach(button => {
+      button.addEventListener("click", () => {
+        questionInput.value = button.textContent;
+        askBot();
+      });
+    });
+
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = () => {};
+    }
+  </script>
 </body>
 </html>
