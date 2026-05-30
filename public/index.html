@@ -19,9 +19,7 @@
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -155,9 +153,7 @@
       transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    button:hover {
-      transform: translateY(-1px);
-    }
+    button:hover { transform: translateY(-1px); }
 
     button:disabled {
       cursor: not-allowed;
@@ -165,18 +161,14 @@
       transform: none;
     }
 
-    button.secondary {
-      background: linear-gradient(135deg, #06b6d4, #2563eb);
-    }
+    button.secondary { background: linear-gradient(135deg, #06b6d4, #2563eb); }
 
     button.ghost {
       background: rgba(255, 255, 255, 0.10);
       border: 1px solid var(--card-border);
     }
 
-    .examples {
-      margin-top: 22px;
-    }
+    .examples { margin-top: 22px; }
 
     .examples p {
       color: var(--muted);
@@ -255,6 +247,8 @@
         <p>Quick test questions:</p>
         <button class="example">What is your name?</button>
         <button class="example">Where are you from?</button>
+        <button class="example">Tell me about your education.</button>
+        <button class="example">What skills do you have?</button>
         <button class="example">What should we know about your life story in a few sentences?</button>
         <button class="example">What’s your #1 superpower?</button>
         <button class="example">What are the top 3 areas you’d like to grow in?</button>
@@ -293,33 +287,33 @@
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition = null;
 
-    const fallbackAnswers = [
+    const answers = [
       {
-        keys: ["what is my name", "what is your name", "your name", "my name", "name", "who are you", "candidate"],
+        keys: ["name", "who are you", "candidate", "introduce your name"],
         answer: "My name is Vijay Singh. I am from Jaipur, Rajasthan, and I recently completed my B.Tech in Electrical Engineering from IIT (ISM) Dhanbad."
       },
       {
-        keys: ["where are you from", "location", "city", "jaipur", "rajasthan"],
+        keys: ["from", "location", "city", "jaipur", "rajasthan", "hometown", "where do you live"],
         answer: "I am from Jaipur, Rajasthan. I recently completed my B.Tech in Electrical Engineering from IIT (ISM) Dhanbad, and I am actively looking for a technical role where I can learn, contribute, and grow."
       },
       {
-        keys: ["education", "college", "degree", "iit", "ism", "dhanbad", "btech", "electrical"],
-        answer: "I recently completed my B.Tech in Electrical Engineering from IIT (ISM) Dhanbad. My background is in Electrical Engineering, but over time I became more interested in technical tools, data analysis, and AI-based workflows."
+        keys: ["education", "college", "degree", "iit", "ism", "dhanbad", "btech", "electrical", "qualification"],
+        answer: "I recently completed my B.Tech in Electrical Engineering from IIT (ISM) Dhanbad. My background is in Electrical Engineering, but over time I became more interested in technical tools, data analysis, product-focused work, and AI-based workflows."
       },
       {
-        keys: ["skills", "skill", "python", "data analysis", "chatgpt", "ai tools"],
-        answer: "I have basic knowledge of Python, data analysis, and AI tools like ChatGPT. I am still improving my technical depth, but I learn quickly and enjoy using tools to solve practical problems."
+        keys: ["skills", "skill", "python", "data", "analysis", "chatgpt", "ai tools", "technical"],
+        answer: "I have basic knowledge of Python, data analysis, and AI tools like ChatGPT. I am still improving my technical depth, but I learn quickly and enjoy using tools to solve practical problems. I am especially interested in using AI tools to make work faster, more structured, and more useful."
       },
       {
-        keys: ["life", "story", "background", "journey", "about yourself", "few sentences", "introduce"],
+        keys: ["life", "story", "background", "journey", "about yourself", "few sentences", "tell me about yourself"],
         answer: "I am from Jaipur, Rajasthan, and I recently completed my B.Tech in Electrical Engineering from IIT (ISM) Dhanbad. My journey has been about exploring different areas, learning what truly interests me, and gradually moving toward technical problem-solving, data analysis, and AI tools. In the beginning, I focused more on core engineering, but later I realized that I enjoy working with tools, analyzing problems, and using technology to make work easier and more effective. I am now actively looking for a technical role where I can learn deeply, contribute sincerely, and grow with real-world experience."
       },
       {
-        keys: ["superpower", "strength", "best skill", "number one", "#1", "strongest"],
+        keys: ["superpower", "strength", "best skill", "number one", "#1", "strongest", "good at"],
         answer: "My number one superpower is problem solving with patience. When I face pressure or a difficult task, I try not to panic. I first observe the problem clearly, understand what inputs are available, break the work into smaller steps, and then start executing. I also believe in not giving up easily, even when something does not work in the first attempt."
       },
       {
-        keys: ["grow", "growth", "improve", "top 3", "three areas", "weakness", "areas"],
+        keys: ["grow", "growth", "improve", "top 3", "three areas", "weakness", "areas to improve"],
         answer: "The top three areas I want to grow in are communication, team collaboration, and debugging and testing. I want to become better at explaining my ideas clearly, working more effectively with different types of people, and improving the quality of my technical work through better testing and debugging. As a fresher, I know I have a lot to learn, and I am ready to put in consistent effort to improve."
       },
       {
@@ -327,19 +321,19 @@
         answer: "A misconception people may have about me is that I am quiet. In reality, I observe things deeply before speaking or contributing. I like to first understand the problem, the team’s direction, and the expectations clearly. Once I have clarity, I contribute sincerely and try to add value in a thoughtful way."
       },
       {
-        keys: ["boundaries", "limits", "comfort zone", "push yourself", "challenge yourself", "pressure", "deadline"],
+        keys: ["boundaries", "limits", "comfort zone", "push yourself", "challenge yourself", "pressure", "deadline", "stress"],
         answer: "I push my boundaries by taking responsibility for tasks even when they are slightly outside my comfort zone. Under pressure, I stay calm, observe the problem, check the deadline, and plan my work according to priority. If I get stuck, I pause, reset my thinking, and restart with a clearer approach instead of giving up. I believe this mindset helps me keep learning and improving."
       },
       {
-        keys: ["why ai", "ai tool", "ai tools", "ai agent", "agents", "chatgpt"],
+        keys: ["why ai", "ai agent", "agents", "ai tools", "chatgpt", "artificial intelligence"],
         answer: "I am interested in AI tools and AI agents because they can make work faster, easier, and more structured. I like the idea of using AI not just for answers, but for improving workflows, reducing repetitive effort, and getting better output from limited time. I want to learn more about how AI agents work because I believe they can become very useful in real technical and business environments."
       },
       {
-        keys: ["100x", "why this company", "why join", "why do you want", "company"],
+        keys: ["100x", "why this company", "why join", "company", "join 100x"],
         answer: "I want to join 100x because it gives me an opportunity to work more closely with AI tools and learn how modern AI-based systems are built. As a fresher, I am looking for a place where I can learn fast, take responsibility, and improve my skills through real work. I believe 100x can be a strong opportunity for me to prove my dedication, improve technically, and contribute with sincerity."
       },
       {
-        keys: ["hire", "hire you", "why should", "choose you", "select you"],
+        keys: ["hire", "hire you", "why should", "choose you", "select you", "why you"],
         answer: "You should consider me because I am hardworking, patient, and genuinely willing to learn. I may be a fresher, but I take tasks seriously and try to complete them in a proper and responsible way. I am comfortable starting from basics, improving step by step, and learning from people around me. If I am given an opportunity, I will work with dedication, stay consistent, and keep improving my skills."
       },
       {
@@ -351,20 +345,38 @@
         answer: "During my internship at AMRIT MediTech, I got exposure to a product-focused technical environment. It helped me understand that technical work is not only about theory, but also about usability, problem-solving, and improving a real product. That experience made me more interested in technical tools, data analysis, and practical software-based workflows."
       },
       {
-        keys: ["sports", "swimming", "captain", "team captain"],
-        answer: "I was captain of the swimming team, and that experience helped me build discipline, patience, and responsibility. It also taught me how to stay calm under pressure and keep improving through consistent practice."
+        keys: ["sports", "swimming", "captain", "team captain", "leadership"],
+        answer: "I was captain of the swimming team, and that experience helped me build discipline, patience, and responsibility. It also taught me how to stay calm under pressure, coordinate with people, and keep improving through consistent practice."
       }
     ];
 
-    function fallbackResponse(message = "") {
-      const q = message.toLowerCase().replace(/[?.,!]/g, "").trim();
+    function normalize(text) {
+      return text.toLowerCase().replace(/[?.,!]/g, " ").replace(/\s+/g, " ").trim();
+    }
 
-      for (const item of fallbackAnswers) {
+    function preparedAnswer(message = "") {
+      const q = normalize(message);
+
+      let best = null;
+      let bestScore = 0;
+
+      for (const item of answers) {
+        let score = 0;
+
         for (const key of item.keys) {
           if (q.includes(key.toLowerCase())) {
-            return item.answer;
+            score += key.split(" ").length + 2;
           }
         }
+
+        if (score > bestScore) {
+          bestScore = score;
+          best = item;
+        }
+      }
+
+      if (best && bestScore > 0) {
+        return best.answer;
       }
 
       return "I would answer that as Vijay Singh: I am a fresher from Jaipur, Rajasthan, with a B.Tech in Electrical Engineering from IIT (ISM) Dhanbad. I am interested in technical roles, AI tools, and data analysis. I try to stay calm, understand the problem clearly, and solve it step by step. I know I have a lot to learn, but I am hardworking, patient, and ready to take responsibility.";
@@ -416,7 +428,7 @@
 
         try {
           const controller = new AbortController();
-          const timeout = setTimeout(() => controller.abort(), 8000);
+          const timeout = setTimeout(() => controller.abort(), 7000);
 
           const res = await fetch("/api/chat", {
             method: "POST",
@@ -429,17 +441,17 @@
 
           if (res.ok) {
             const data = await res.json();
-            if (data.answer) {
+            if (data.answer && data.answer.length > 20) {
               answer = data.answer;
               mode = data.mode || "openai";
             }
           }
         } catch (apiError) {
-          console.log("API unavailable, using prepared response.");
+          console.log("API not available, using prepared response.");
         }
 
         if (!answer) {
-          answer = fallbackResponse(message);
+          answer = preparedAnswer(message);
         }
 
         responseBox.textContent = answer;
@@ -447,7 +459,7 @@
         if (mode === "openai") {
           modeText.textContent = "Live AI mode active.";
         } else {
-          modeText.textContent = "Bot response active.";
+          modeText.textContent = "Smart prepared response active.";
         }
 
         speak(answer);
@@ -455,8 +467,8 @@
 
       } catch (err) {
         console.error(err);
-        responseBox.textContent = fallbackResponse(message);
-        modeText.textContent = "Bot response active.";
+        responseBox.textContent = preparedAnswer(message);
+        modeText.textContent = "Smart prepared response active.";
         setStatus("Ready", false);
       } finally {
         askButton.disabled = false;
@@ -470,19 +482,14 @@
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
-      recognition.onstart = () => {
-        setStatus("Listening...", true);
-      };
+      recognition.onstart = () => setStatus("Listening...", true);
 
       recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        questionInput.value = transcript;
+        questionInput.value = event.results[0][0].transcript;
         askBot();
       };
 
-      recognition.onerror = () => {
-        setStatus("Mic error. Please type your question.", false);
-      };
+      recognition.onerror = () => setStatus("Mic error. Please type your question.", false);
 
       recognition.onend = () => {
         if (statusText.textContent === "Listening...") {
@@ -497,20 +504,12 @@
     askButton.addEventListener("click", askBot);
 
     micButton.addEventListener("click", () => {
-      if (recognition) {
-        recognition.start();
-      }
+      if (recognition) recognition.start();
     });
 
     stopButton.addEventListener("click", () => {
-      if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-
-      if (recognition) {
-        recognition.stop();
-      }
-
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      if (recognition) recognition.stop();
       setStatus("Ready", false);
     });
 
